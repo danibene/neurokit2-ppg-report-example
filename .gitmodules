@@ -1,0 +1,4 @@
+[submodule "lib/NeuroKit"]
+	path = lib/NeuroKit
+	url = https://github.com/danibene/NeuroKit.git
+	branch = feature/ppg_process_report
