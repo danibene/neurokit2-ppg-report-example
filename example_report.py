@@ -26,7 +26,22 @@ if __name__ == "__main__":
     ppg = data["PPG"]
     # sampling rate in file name
     sampling_rate = 100
+    
+    # imagine we have tiny pygmy shrew 
+    #heart_rate = 1000
+    #max_heart_rate = 1300
+    # ugh this does not work b/c ppg simulate assumes humans w/ max 200 BPM :(
+    #Skipping random IBI modulation, since the offset_weight 0.1 leads to physiologically implausible wave durations of 53.99999999999565 milliseconds.
+    heart_rate = 40
+    max_heart_rate = 90
+    ppg = nk.ppg_simulate(sampling_rate=sampling_rate, heart_rate=heart_rate, burst_number=50)
+    
     report = str(pathlib.Path("docs", "myreport.html"))
     # if parent path does not exist, create it
     pathlib.Path(report).resolve().parent.mkdir(parents=True, exist_ok=True)
+    method="elgendi"
+    
+    
+    ppg_clean_kwargs={"method": "nabian2018", "heart_rate": heart_rate}
+    ppg_findpeaks_kwargs={"mindelay": 60/max_heart_rate}
     nk.ppg_process(ppg, sampling_rate=sampling_rate, report=report)
