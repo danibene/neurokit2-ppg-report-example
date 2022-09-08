@@ -26,4 +26,7 @@ if __name__ == "__main__":
     ppg = data["PPG"]
     # sampling rate in file name
     sampling_rate = 100
-    nk.ppg_process(ppg, sampling_rate=sampling_rate, report="myreport.html")
+    report = str(pathlib.Path("docs", "myreport.html"))
+    # if parent path does not exist, create it
+    pathlib.Path(report).resolve().parent.mkdir(parents=True, exist_ok=True)
+    nk.ppg_process(ppg, sampling_rate=sampling_rate, report=report)
